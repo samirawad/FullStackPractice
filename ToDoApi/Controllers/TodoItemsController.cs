@@ -20,6 +20,12 @@ namespace ToDoApi.Controllers
             _context = context;
         }
 
+        [HttpGet("Version")]
+        public string Version()
+        {
+            return "Welcome to ToDoListAPI v0.0.1";
+        }
+
         // GET: api/TodoItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()

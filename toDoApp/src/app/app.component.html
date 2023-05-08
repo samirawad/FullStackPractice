@@ -1,2 +1,9 @@
-<span>{{ title }} app is running!</span>
-<router-outlet></router-outlet>
+<div>{{ title }} please select the example you wish to view:</div>
+<nav>
+    <ul>
+      <li><a routerLink="/todo" routerLinkActive="active" ariaCurrentWhenActive="page">ToDo</a></li>
+      <li><a routerLink="/weather" routerLinkActive="active" ariaCurrentWhenActive="page">Weather</a></li>
+    </ul>
+  </nav>
+  <!-- The routed views render in the <router-outlet>-->
+  <router-outlet></router-outlet>
