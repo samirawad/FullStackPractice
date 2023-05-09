@@ -21,9 +21,14 @@ namespace ToDoApi.Controllers
         }
 
         [HttpGet("Version")]
-        public string Version()
+        public ApiVersion Version()
         {
-            return "Welcome to ToDoListAPI v0.0.1";
+            return new ApiVersion(){
+                Major = 0,
+                Minor = 0,
+                Revision = 1,
+                Message = "Welcome to toDoApi!"
+            };
         }
 
         // GET: api/TodoItems

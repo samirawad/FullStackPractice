@@ -1,22 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToDoService } from '../Services/to-do.service';
+import { Todo } from './todo';
+import { ToDoVersion } from './todoVersion';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
+  providers: [ToDoService],
   styleUrls: ['./todo.component.sass']
 })
 
-export class TodoComponent {
+export class TodoComponent implements OnInit {
+  version: ToDoVersion = {
+    Major: 0,
+    Minor: 0,
+    Revision: 0,
+    Message: 'Undefined from server!'
+  };
+  toDoItems: Todo[] = [];
 
-constructor(private toDoService: ToDoService) {}
+  constructor(private toDoService: ToDoService) { }
 
-// Add a todo Item:
+  ngOnInit(): void {
+    this.getVersion();
+    this.getToDoItems();
+  }
 
-// Delete a todo Item:
+  // Version
+  getVersion(): void {
+    this.toDoService.getVersion()
+      .subscribe((version: ToDoVersion) => { 
+        this.version = version
+       });
+  }
 
-// List of all todo Items
+  // Add a todo Item:
 
-// Number of completed todo Items:
+  // Delete a todo Item:
+
+  // List of all todo Items
+  getToDoItems(): void {
+    this.toDoService.getToDoItems()
+      .subscribe((items: Todo[]) => { this.toDoItems = items}) ;
+  }
+
+  // Number of completed todo Items:
 
 }

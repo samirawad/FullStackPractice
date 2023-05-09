@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { Todo } from '../todo/todo';
+import { ToDoVersion } from '../todo/todoVersion';
+import { Constants } from '../config/constants'
+
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -8,19 +18,13 @@ export class ToDoService {
 
   constructor(private http: HttpClient)   { }
 
-  public get(url: string, options?: any) { 
-    return this.http.get(url, options); 
-  } 
+  getVersion(): Observable<ToDoVersion> {
+    return this.http.get<ToDoVersion>(Constants.API_ENDPOINT_TODO_VERSION);
+  }
 
-  public post(url: string, data: any, options?: any) { 
-    return this.http.post(url, data, options); 
-  } 
+  /* get the list of ToDo items from the server */
+  getToDoItems(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(Constants.API_ENDPOINT_TODO);
+  }
 
-  public put(url: string, data: any, options?: any) { 
-    return this.http.put(url, data, options); 
-  } 
-
-  public delete(url: string, options?: any) { 
-    return this.http.delete(url, options); 
-  }   
 }
