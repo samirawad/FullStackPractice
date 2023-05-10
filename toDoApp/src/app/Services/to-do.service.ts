@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Todo } from '../todo/todo';
 import { ToDoVersion } from '../todo/todoVersion';
-import { Constants } from '../config/constants'
+import { Constants } from '../config/constants';
+import { MessageService } from './message.service';
 
 
 
@@ -15,8 +16,40 @@ import { Constants } from '../config/constants'
   providedIn: 'root'
 })
 export class ToDoService {
+  
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
-  constructor(private http: HttpClient)   { }
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+    )   { }
+
+  private log(message: string) {
+    this.messageService.add(`ToDoService: ${message}`);
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   *
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+    private handleError<T>(operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+  
+        // TODO: send the error to remote logging infrastructure
+        console.error(error); // log to console instead
+  
+        // TODO: better job of transforming error for user consumption
+        this.log(`${operation} failed: ${error.message}`);
+  
+        // Let the app keep running by returning an empty result.
+        return of(result as T);
+      };
+    }
 
   getVersion(): Observable<ToDoVersion> {
     return this.http.get<ToDoVersion>(Constants.API_ENDPOINT_TODO_VERSION);
@@ -25,6 +58,13 @@ export class ToDoService {
   /* get the list of ToDo items from the server */
   getToDoItems(): Observable<Todo[]> {
     return this.http.get<Todo[]>(Constants.API_ENDPOINT_TODO);
+  }
+
+  addToDoItem(item: Todo): Observable<Todo>  {
+    return this.http.post<Todo>(Constants.API_ENDPOINT_TODO, item, this.httpOptions).pipe(
+      tap((newTodo: Todo) => this.log(`added todo w/ id=${newTodo.id}`)),
+      catchError(this.handleError<Todo>('addTodo'))      
+    );
   }
 
 }

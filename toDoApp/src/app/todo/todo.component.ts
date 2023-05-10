@@ -12,10 +12,10 @@ import { ToDoVersion } from './todoVersion';
 
 export class TodoComponent implements OnInit {
   version: ToDoVersion = {
-    Major: 0,
-    Minor: 0,
-    Revision: 0,
-    Message: 'Undefined from server!'
+    major: 0,
+    minor: 0,
+    revision: 0,
+    message: 'Undefined from server!'
   };
   toDoItems: Todo[] = [];
 
@@ -35,6 +35,18 @@ export class TodoComponent implements OnInit {
   }
 
   // Add a todo Item:
+  addToDoItem(name: string) {
+    name = name.trim();
+    if(!name) { return; }
+    var newTodo = {
+      name: name,
+      isComplete: false
+    } as Todo;
+    this.toDoService.addToDoItem(newTodo)
+      .subscribe(newItem => {
+        this.toDoItems.push(newItem);
+      });
+  }
 
   // Delete a todo Item:
 

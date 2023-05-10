@@ -1,8 +1,15 @@
-<div>Version: {{version.Message}}</div>
-<div>Add a new todo item:</div>
+<div>Version: {{version.message}}</div>
+<label for="new-to">Add a new todo item:</label>
 <div>
-    <input name="todoinput"/>
+    <input id="new-todo" #newTodo />
+    <button type="button" class="add-button" (click)="
+    addToDoItem(newTodo.value);
+    newTodo.value=''
+    ">
+        add a new todo item 
+    </button>
 </div>
 <div>List of todo items:</div>
 <div>--whee list--</div>
+<div>Number of todo items: </div>
 <div>number of todo items completed: </div>
