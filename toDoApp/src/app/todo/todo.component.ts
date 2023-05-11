@@ -48,6 +48,11 @@ export class TodoComponent implements OnInit {
       });
   }
 
+  deleteToDoItem(item: Todo){
+    this.toDoItems = this.toDoItems.filter(i => i !== item);
+    this.toDoService.deleteToDoItem(item.id).subscribe();    
+  }
+
   // Delete a todo Item:
 
   // List of all todo Items
@@ -56,6 +61,10 @@ export class TodoComponent implements OnInit {
       .subscribe((items: Todo[]) => { this.toDoItems = items}) ;
   }
 
+  updateCheckedStatus(newCheckedStatus: boolean, item: Todo) {
+    item.isComplete = newCheckedStatus;
+    this.toDoService.updateToDoItem(item).subscribe();
+  }
   // Number of completed todo Items:
 
 }

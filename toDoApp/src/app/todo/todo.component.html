@@ -10,6 +10,12 @@
     </button>
 </div>
 <div>List of todo items:</div>
-<div>--whee list--</div>
-<div>Number of todo items: </div>
+<ul >
+    <li *ngFor="let item of toDoItems">
+        <span class="badge">{{item.id}}</span> {{item.name}}
+        <input #isComplete type="checkbox" [checked]="item.isComplete" (change)="updateCheckedStatus(isComplete.checked, item)"/>
+        <button type="button" class="delete" title="delete item" (click)="deleteToDoItem(item)">x</button>
+    </li>
+  </ul>
+<div>Number of todo items: {{toDoItems.length}}</div>
 <div>number of todo items completed: </div>

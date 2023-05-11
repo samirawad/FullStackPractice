@@ -67,4 +67,22 @@ export class ToDoService {
     );
   }
 
+  /** PUT: update the item on the server */
+  updateToDoItem(item: Todo): Observable<any> {
+    const url = `${Constants.API_ENDPOINT_TODO}/${item.id}`;
+    return this.http.put(url, item, this.httpOptions).pipe(
+      tap(_ => this.log(`updated todoItem id=${item.id}, new checked status: ${item.isComplete}`)),
+      catchError(this.handleError<any>('updateTodo'))
+    );
+  }
+
+  deleteToDoItem(id: number): Observable<Todo> {
+    const url = `${Constants.API_ENDPOINT_TODO}/${id}`;
+
+    return this.http.delete<Todo>(url, this.httpOptions).pipe(
+      tap(_ => this.log(`deleted todo id=${id}`)),
+      catchError(this.handleError<Todo>('deleteToDo'))
+    );
+  }
+
 }
