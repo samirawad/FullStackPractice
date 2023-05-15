@@ -67,4 +67,7 @@ export class TodoComponent implements OnInit {
   }
   // Number of completed todo Items:
 
+  numberOfCompletedItems(){
+    return this.toDoItems.filter(i => i.isComplete).length;
+  }
 }
