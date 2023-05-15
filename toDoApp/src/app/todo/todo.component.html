@@ -14,6 +14,7 @@
     <li *ngFor="let item of toDoItems">
         <span>{{item.id}}</span> {{item.name}}
         <input #isComplete type="checkbox" [checked]="item.isComplete" (change)="updateCheckedStatus(isComplete.checked, item)"/>
+        <mat-slide-toggle>Toggle!</mat-slide-toggle>
         <button type="button" class="delete" title="delete item" (click)="deleteToDoItem(item)">x</button>
     </li>
   </ul>

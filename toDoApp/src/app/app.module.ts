@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { TodoComponent } from './todo/todo.component';
 import { WeatherComponent } from './weather/weather.component';
 import { MessagesComponent } from './messages/messages.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { MessagesComponent } from './messages/messages.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
